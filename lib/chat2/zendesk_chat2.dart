@@ -11,6 +11,7 @@ class Zendesk2Chat {
           switch (call.method) {
             case 'sendChatProvidersResult':
               final providerModel = ChatProviderModel.fromJson(arguments);
+              _previousChatProviderModel = providerModel;
               _providersStream?.sink.add(providerModel);
               break;
             case 'sendChatConnectionStatusResult':
@@ -37,15 +38,18 @@ class Zendesk2Chat {
                   connectionStatus = CONNECTION_STATUS.UNREACHABLE;
                   break;
               }
+              _previousConnectionStatus = connectionStatus;
               _connectionStatusStream?.sink.add(connectionStatus);
               break;
             case 'sendChatSettingsResult':
               ChatSettingsModel? chatSettingsModel =
                   ChatSettingsModel.fromJson(arguments);
+              _previousChatSettingsModel = chatSettingsModel;
               _chatSettingsStream?.sink.add(chatSettingsModel);
               break;
             case 'sendChatIsOnlineResult':
               final chatAccountModel = ChatAccountModel.fromJson(arguments);
+              _previousChatAccountModel = chatAccountModel;
               _chatAccountStream?.sink.add(chatAccountModel);
               break;
           }
@@ -59,6 +63,12 @@ class Zendesk2Chat {
   static final Zendesk2Chat instance = Zendesk2Chat._();
 
   static final _channel = Zendesk.instance.channel;
+
+  /// Cache previous provider values to restore same chat window
+  ChatProviderModel? _previousChatProviderModel;
+  CONNECTION_STATUS? _previousConnectionStatus;
+  ChatSettingsModel? _previousChatSettingsModel;
+  ChatAccountModel? _previousChatAccountModel;
 
   /// added ignore so the source won't have warnings
   /// but don't forget to close or .dispose() when needed!!!
@@ -131,17 +141,29 @@ class Zendesk2Chat {
   /// Start chat providers for custom UI handling
   ///
   /// ```periodicRetrieve``` periodic time to update the ```providersStream```
-  /// 
+  ///
   /// ```autoConnect``` Determines if you also want to connect to the chat socket
-  /// 
+  ///
   /// The user will not receive push notifications while connected
   Future<void> startChatProviders({bool autoConnect = true}) async {
     try {
       if (!_isStreaming) {
         _providersStream = StreamController<ChatProviderModel>();
+        if (_previousChatProviderModel != null) {
+          _providersStream?.add(_previousChatProviderModel!);
+        }
         _connectionStatusStream = StreamController<CONNECTION_STATUS>();
+        if (_previousConnectionStatus != null) {
+          _connectionStatusStream?.add(_previousConnectionStatus!);
+        }
         _chatSettingsStream = StreamController<ChatSettingsModel>();
+        if (_previousChatSettingsModel != null) {
+          _chatSettingsStream?.add(_previousChatSettingsModel!);
+        }
         _chatAccountStream = StreamController<ChatAccountModel>();
+        if (_previousChatAccountModel != null) {
+          _chatAccountStream?.add(_previousChatAccountModel!);
+        }
         _isStreaming = true;
       }
 
@@ -208,6 +230,10 @@ class Zendesk2Chat {
   Future<void> endChat() async {
     try {
       await _channel.invokeMethod('endChat');
+      _previousChatAccountModel = null;
+      _previousChatProviderModel = null;
+      _previousChatSettingsModel = null;
+      _previousConnectionStatus = null;
     } catch (e) {
       print(e);
     }
