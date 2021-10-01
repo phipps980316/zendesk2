@@ -315,6 +315,7 @@ class Zendesk2Chat(private val plugin: Zendesk2Plugin, private val channel: Meth
     }
 
     fun endChat() {
+        Chat.INSTANCE.resetIdentity()
         Chat.INSTANCE.providers()?.chatProvider()?.endChat(object : ZendeskCallback<Void>() {
             override fun onSuccess(v: Void?) {
                 print("success")
@@ -324,7 +325,6 @@ class Zendesk2Chat(private val plugin: Zendesk2Plugin, private val channel: Meth
                 print(e)
             }
         })
-        Chat.INSTANCE.resetIdentity()
     }
 
 }
