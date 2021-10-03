@@ -92,6 +92,8 @@ public class SwiftZendesk2Plugin: NSObject, FlutterPlugin {
             break
         case "setVisitorNote":
             zendesk2Chat.setVisitorNote(arguments)
+        case "sendEmailTranscript":
+            zendesk2Chat.sendEmailTranscript(arguments)
         // answer sdk method channels
         case "init_answer":
             if streamingAnswerSDK {

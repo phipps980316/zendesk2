@@ -391,4 +391,11 @@ public class SwiftZendesk2Chat {
         let note: String = (arguments?["note"] ?? "") as! String
         Chat.profileProvider?.setNote(note)
     }
+    
+    func sendEmailTranscript(_ arguments: Dictionary<String, Any>?) -> Void {
+        let email: String = (arguments?["email"] ?? "") as! String
+        if(Chat.chatProvider?.chatState.isChatting ?? false){
+            Chat.chatProvider?.sendEmailTranscript(email)
+        }
+    }
 }

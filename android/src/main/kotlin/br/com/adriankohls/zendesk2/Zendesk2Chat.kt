@@ -319,6 +319,14 @@ class Zendesk2Chat(private val plugin: Zendesk2Plugin, private val channel: Meth
         Chat.INSTANCE.providers()?.profileProvider()?.setVisitorNote(note)
     }
 
+    fun sendEmailTranscript(call: MethodCall) {
+        val email = call.argument<String>("email") ?: ""
+        val provider = Chat.INSTANCE.providers()?.chatProvider()
+        if(provider?.chatState?.isChatting == true){
+            provider.sendEmailTranscript(email, null)
+        }
+    }
+
     fun endChat() {
         Chat.INSTANCE.resetIdentity()
         Chat.INSTANCE.providers()?.chatProvider()?.endChat(object : ZendeskCallback<Void>() {

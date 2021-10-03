@@ -279,6 +279,20 @@ class Zendesk2Chat {
     }
   }
 
+  /// Request a transcript of the chat
+  ///
+  /// ```email``` The email address that the transcript will be sent to
+  Future<void> sendEmailTranscript({required String email}) async {
+    try {
+      final arguments = {
+        'email': email,
+      };
+      await _channel.invokeMethod('sendEmailTranscript', arguments);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   /// Release and close streams
   Future<void> dispose() async {
     try {
