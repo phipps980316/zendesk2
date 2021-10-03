@@ -314,6 +314,11 @@ class Zendesk2Chat(private val plugin: Zendesk2Plugin, private val channel: Meth
         }
     }
 
+    fun setVisitorNote(call: MethodCall) {
+        val note = call.argument<String>("note") ?: ""
+        Chat.INSTANCE.providers()?.profileProvider()?.setVisitorNote(note)
+    }
+
     fun endChat() {
         Chat.INSTANCE.resetIdentity()
         Chat.INSTANCE.providers()?.chatProvider()?.endChat(object : ZendeskCallback<Void>() {

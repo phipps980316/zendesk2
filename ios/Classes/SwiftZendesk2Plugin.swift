@@ -90,6 +90,8 @@ public class SwiftZendesk2Plugin: NSObject, FlutterPlugin {
             zendesk2Chat.dispose()
             streamingChatSDK = false
             break
+        case "setVisitorNote":
+            zendesk2Chat.setVisitorNote(arguments)
         // answer sdk method channels
         case "init_answer":
             if streamingAnswerSDK {

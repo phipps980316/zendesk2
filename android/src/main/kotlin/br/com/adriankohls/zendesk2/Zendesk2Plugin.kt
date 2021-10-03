@@ -62,6 +62,7 @@ class Zendesk2Plugin : ActivityAware, FlutterPlugin, MethodCallHandler {
             "sendChatConnectionStatusResult" -> mResult = call.arguments
             "sendChatSettingsResult" -> mResult = call.arguments
             "sendChatIsOnlineResult" -> mResult = call.arguments
+            "setVisitorNote" -> zendesk2Chat.setVisitorNote(call)
             // answer sdk method channels
             "init_answer" -> {
                 if (streamingAnswerSDK) {

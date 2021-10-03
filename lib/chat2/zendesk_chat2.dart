@@ -265,6 +265,20 @@ class Zendesk2Chat {
     }
   }
 
+  /// Set on Native/Custom chat user note
+  ///
+  /// ```note``` The note to be set for the user
+  Future<void> setVisitorNote({required String note}) async {
+    try {
+      final arguments = {
+        'note': note,
+      };
+      await _channel.invokeMethod('setVisitorNote', arguments);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   /// Release and close streams
   Future<void> dispose() async {
     try {

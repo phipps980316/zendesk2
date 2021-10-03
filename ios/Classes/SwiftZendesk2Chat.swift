@@ -386,4 +386,9 @@ public class SwiftZendesk2Chat {
             NSLog("Identity reseted")
         })
     }
+    
+    func setVisitorNote(_ arguments: Dictionary<String, Any>?) -> Void {
+        let note: String = (arguments?["note"] ?? "") as! String
+        Chat.profileProvider?.setNote(note)
+    }
 }
