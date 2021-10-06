@@ -327,6 +327,28 @@ class Zendesk2Chat(private val plugin: Zendesk2Plugin, private val channel: Meth
         }
     }
 
+    fun sendOfflineForm(call: MethodCall) {
+        val name = call.argument<String>("name") ?: ""
+        val email = call.argument<String>("email") ?: ""
+        val phoneNumber = call.argument<String>("phoneNumber") ?: ""
+        val department = call.argument<String>("department") ?: ""
+        val message = call.argument<String>("message") ?: ""
+
+        val visitorInfo: VisitorInfo = VisitorInfo.builder()
+                .withName(name)
+                .withEmail(email)
+                .withPhoneNumber(phoneNumber)
+                .build()
+
+        val offlineForm = OfflineForm.builder(message)
+                .withDepartment(department)
+                .withVisitorInfo(visitorInfo)
+                .build()
+
+        Chat.INSTANCE.providers()?.chatProvider()?.sendOfflineForm(offlineForm, null)
+
+    }
+
     fun endChat() {
         Chat.INSTANCE.resetIdentity()
         Chat.INSTANCE.providers()?.chatProvider()?.endChat(object : ZendeskCallback<Void>() {

@@ -293,6 +293,38 @@ class Zendesk2Chat {
     }
   }
 
+  /// Sends an offline message when no agent is available
+  ///
+  /// ```name``` The name of the user identified
+  ///
+  /// ```email``` The email of the user identified
+  ///
+  /// ```phoneNumber``` The phone number of the user identified
+  ///
+  /// ```departmentName``` The chat department id that will receive the the message
+  ///
+  /// ```message``` The message to be sent
+  Future<void> sendOfflineForm({
+    required String name,
+    required String email,
+    required String phoneNumber,
+    required String department,
+    required String message,
+  }) async {
+    try {
+      final arguments = {
+        'name': name,
+        'email': email,
+        "phoneNumber": phoneNumber,
+        "department": department,
+        "message": message,
+      };
+      await _channel.invokeMethod('sendOfflineForm', arguments);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   /// Release and close streams
   Future<void> dispose() async {
     try {

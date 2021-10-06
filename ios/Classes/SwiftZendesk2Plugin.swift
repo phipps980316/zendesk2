@@ -94,6 +94,8 @@ public class SwiftZendesk2Plugin: NSObject, FlutterPlugin {
             zendesk2Chat.setVisitorNote(arguments)
         case "sendEmailTranscript":
             zendesk2Chat.sendEmailTranscript(arguments)
+        case "sendOfflineForm":
+            zendesk2Chat.sendOfflineForm(arguments)
         // answer sdk method channels
         case "init_answer":
             if streamingAnswerSDK {

@@ -398,4 +398,18 @@ public class SwiftZendesk2Chat {
             Chat.chatProvider?.sendEmailTranscript(email)
         }
     }
+    
+    func sendOfflineForm(_ arguments: Dictionary<String, Any>?) -> Void {
+        let name: String = (arguments?["name"] ?? "") as! String
+        let email: String = (arguments?["email"] ?? "") as! String
+        let phoneNumber: String = (arguments?["phoneNumber"] ?? "") as! String
+        let department: String = (arguments?["department"] ?? "") as! String
+        let message: String = (arguments?["message"] ?? "") as! String
+        
+        let visitorInfo = VisitorInfo.init(name: name, email: email, phoneNumber: phoneNumber)
+        
+        let offlineForm = OfflineForm.init(visitorInfo: visitorInfo, departmentId: department, message: message)
+        
+        Chat.chatProvider?.sendOfflineForm(offlineForm)
+    }
 }
