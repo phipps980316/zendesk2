@@ -25,6 +25,11 @@ public class SwiftZendesk2Chat {
         Chat.initialize(accountKey: accountKey!, appId: appId!)
     }
     
+    func enableLogger() -> Void {
+        Logger.isEnabled = true;
+        Logger.defaultLevel = .verbose;
+    }
+    
     func dispose() -> Void {
         Chat.instance?.clearCache()
     }

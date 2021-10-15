@@ -325,6 +325,15 @@ class Zendesk2Chat {
     }
   }
 
+  /// Enables logging
+  Future<void> enableLogger() async {
+    try {
+      await _channel.invokeMethod('enableLogger');
+    } catch (e) {
+      print(e);
+    }
+  }
+
   /// Release and close streams
   Future<void> dispose() async {
     try {

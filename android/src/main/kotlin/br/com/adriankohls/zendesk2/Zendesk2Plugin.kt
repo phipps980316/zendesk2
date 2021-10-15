@@ -47,7 +47,7 @@ class Zendesk2Plugin : ActivityAware, FlutterPlugin, MethodCallHandler {
                 connectionStatusObservationScope.cancel()
                 zendesk2Chat.dispose()
             }
-            "logger" -> zendesk2Chat.logger(call)
+            "enableLogger" -> zendesk2Chat.enableLogger()
             "setVisitorInfo" -> zendesk2Chat.setVisitorInfo(call)
             "startChatProviders" -> zendesk2Chat.startChatProviders()
             "chat_dispose" -> zendesk2Chat.dispose()

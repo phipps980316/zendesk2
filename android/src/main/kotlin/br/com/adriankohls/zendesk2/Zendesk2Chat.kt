@@ -23,10 +23,8 @@ class Zendesk2Chat(private val plugin: Zendesk2Plugin, private val channel: Meth
         }
     }
 
-    fun logger(call: MethodCall) {
-        var enabled = call.argument<Boolean>("enabled")
-        enabled = enabled ?: false
-        Logger.setLoggable(enabled)
+    fun enableLogger() {
+        Logger.setLoggable(true)
     }
 
     fun dispose() {
