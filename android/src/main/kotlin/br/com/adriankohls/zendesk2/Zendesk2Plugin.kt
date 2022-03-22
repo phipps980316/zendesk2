@@ -21,14 +21,10 @@ class Zendesk2Plugin : ActivityAware, FlutterPlugin, MethodCallHandler {
     val settingsObservationScope: ObservationScope = ObservationScope()
     val connectionStatusObservationScope: ObservationScope = ObservationScope()
 
-
     var streamingChatSDK: Boolean = false
-    var streamingAnswerSDK: Boolean = false
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         val zendesk2Chat = Zendesk2Chat(this, channel)
-        val zendesk2Answer = Zendesk2Answer(this, channel)
-
 
         var mResult: Any? = null
         when (call.method) {
@@ -65,20 +61,6 @@ class Zendesk2Plugin : ActivityAware, FlutterPlugin, MethodCallHandler {
             "setVisitorNote" -> zendesk2Chat.setVisitorNote(call)
             "sendEmailTranscript" -> zendesk2Chat.sendEmailTranscript(call)
             "sendOfflineForm" -> zendesk2Chat.sendOfflineForm(call)
-            // answer sdk method channels
-            "init_answer" -> {
-                if (streamingAnswerSDK) {
-                    print("Answer SDK is already running!")
-                } else {
-                    zendesk2Answer.initialize(call)
-                }
-            }
-            "query" -> zendesk2Answer.deflectionQuery(call)
-            "resolve_article" -> zendesk2Answer.resolveArticleDeflection(call)
-            "reject_article" -> zendesk2Answer.rejectArticleDeflection(call)
-            "sendAnswerProviderModel" -> mResult = call.arguments
-            "sendResolveArticleDeflection" -> mResult = call.arguments
-            "sendRejectArticleDeflection" -> mResult = call.arguments
             else -> print("method not implemented")
         }
 
@@ -113,5 +95,4 @@ class Zendesk2Plugin : ActivityAware, FlutterPlugin, MethodCallHandler {
     override fun onDetachedFromActivity() {
         activity = null
     }
-
 }
