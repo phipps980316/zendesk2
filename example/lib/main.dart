@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:zendesk2/zendesk2.dart';
-import 'package:zendesk2_example/zendesk_answer.dart';
 import 'package:zendesk2_example/zendesk_chat.dart';
 
 void main() {
@@ -35,12 +34,6 @@ class _Home extends State<Home> {
   String appId = '';
   String clientId = '';
   String zendeskUrl = '';
-
-  void answer() async {
-    z.initAnswerSDK(appId, clientId, zendeskUrl);
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => ZendeskAnswerUI()));
-  }
 
   void chat() async {
     String name = '';
@@ -76,12 +69,6 @@ class _Home extends State<Home> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          FloatingActionButton.extended(
-            heroTag: 'answer',
-            icon: Icon(FontAwesomeIcons.comments),
-            label: Text('Answer BOT'),
-            onPressed: answer,
-          ),
           FloatingActionButton.extended(
             heroTag: 'chat',
             icon: Icon(FontAwesomeIcons.comments),

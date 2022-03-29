@@ -20,7 +20,6 @@ A new flutter plugin project.
   s.dependency 'Flutter'
   s.dependency 'ZendeskCoreSDK', '~>2.5.1'
   s.dependency 'ZendeskChatProvidersSDK', '~>2.11.1'
-  s.dependency 'ZendeskAnswerBotProvidersSDK', '~> 2.1.3'
   s.platform = :ios, '10.0'
   s.requires_arc = true
   s.swift_version = '5.3.2'
