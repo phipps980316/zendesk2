@@ -11,6 +11,7 @@ public class SwiftZendesk2Plugin: NSObject, FlutterPlugin {
     var statusObservationToken: ObservationToken? = nil
     
     private var streamingChatSDK: Bool = false
+    private var streamingAnswerSDK: Bool = false
     
     private var channel: FlutterMethodChannel
     
@@ -33,6 +34,7 @@ public class SwiftZendesk2Plugin: NSObject, FlutterPlugin {
         var mResult: Any? = nil
         
         let zendesk2Chat = SwiftZendesk2Chat(channel: channel, flutterPlugin: self)
+        let zendesk2Answer = SwiftZendesk2Answer(channel: channel, flutterPlugin: self)
         
         switch(method){
         // chat sdk method channels
@@ -96,6 +98,32 @@ public class SwiftZendesk2Plugin: NSObject, FlutterPlugin {
             zendesk2Chat.sendOfflineForm(arguments)
         case "enableLogger":
             zendesk2Chat.enableLogger()
+        // answer sdk method channels
+        case "init_answer":
+            if streamingAnswerSDK {
+                NSLog("Answer Providers already started!")
+            } else {
+                zendesk2Answer.initialize(arguments)
+            }
+            break
+        case "query":
+            zendesk2Answer.deflectionQuery(arguments)
+            break
+        case "resolve_article":
+            zendesk2Answer.resolveArticleDeflection(arguments)
+            break
+        case "reject_article":
+            zendesk2Answer.rejectArticleDeflection(arguments)
+            break
+        case "sendAnswerProviderModel":
+            mResult = arguments
+            break
+        case "sendResolveArticleDeflection":
+            mResult = arguments
+            break
+        case "sendRejectArticleDeflection":
+            mResult = arguments
+            break
         default:
             break
         }

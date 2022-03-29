@@ -3,6 +3,7 @@
 # Run `pod lib lint zendesk2.podspec' to validate before publishing.
 #
 # https://cocoapods.org/pods/ZendeskChatProvidersSDK
+# https://cocoapods.org/pods/ZendeskAnswerBotProvidersSDK
 Pod::Spec.new do |s|
   s.name             = 'zendesk2'
   s.version          = '0.0.1'
@@ -17,8 +18,9 @@ A new flutter plugin project.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'ZendeskCoreSDK', '~>2.6.0'
-  s.dependency 'ZendeskChatProvidersSDK', '~>2.11.2'
+  s.dependency 'ZendeskCoreSDK', '~>2.5.1'
+  s.dependency 'ZendeskChatProvidersSDK', '~>2.11.1'
+  s.dependency 'ZendeskAnswerBotProvidersSDK', '~> 2.1.3'
   s.platform = :ios, '10.0'
   s.requires_arc = true
   s.swift_version = '5.3.2'

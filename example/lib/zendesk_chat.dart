@@ -162,7 +162,7 @@ class _ZendeskChat extends State<ZendeskChat> {
     final compatibleExt = _chatSettingsModel?.supportedFileTypes;
 
     final result = isPhoto
-        ? await ImagePicker().pickImage(source: ImageSource.gallery)
+        ? await ImagePicker.pickImage(source: ImageSource.gallery)
         : await FilePicker.platform.pickFiles(
             allowMultiple: false,
             type: FileType.custom,
@@ -173,7 +173,7 @@ class _ZendeskChat extends State<ZendeskChat> {
 
     final path = file is PlatformFile ? file.path : (file as File).path;
 
-    _z.sendFile(path!);
+    _z.sendFile(path);
   }
 
   void _settings() async {
